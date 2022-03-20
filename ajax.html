@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>AJAX Example</h1>
+    <button id="callAjax">Click me to fetch data</button><br />
+    <table style="width: 100%">
+      <thead>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+
+        <th>Phone</th>
+      </thead>
+      <tbody id="resultArea">
+        <tr>
+          <td>Please wait.........</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+
+  <script>
+    document
+      .getElementById("callAjax")
+      .addEventListener("click", () => xhr.send());
+    var xhr = new XMLHttpRequest();
+    xhr.open("get", "https://jsonplaceholder.typicode.com/users");
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        let resultData = JSON.parse(xhr.responseText);
+        var htmlContent = "";
+        for (i = 0; i < resultData.length; i++) {
+          var data = resultData[i];
+          htmlContent =
+            htmlContent +
+            `<tr><td>${data.id}</td><td>${data.name}</td><td>${data.email}</td><td>${data.phone}</td></tr>`;
+        }
+        document.getElementById("resultArea").innerHTML = htmlContent;
+      } else {
+        alert("error");
+      }
+    };
+  </script>
+</html>
